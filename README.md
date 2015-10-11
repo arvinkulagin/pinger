@@ -34,7 +34,7 @@ func main() {
 }
 ```
 ## API
-```go
+```
 import "github.com/arvinkulagin/pinger"
 
 type Pinger interface {
