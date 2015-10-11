@@ -1,7 +1,7 @@
 # pinger
 ICMP/UDP ping library for Go
 ## Example
-```
+```go
 package main
 
 import (
@@ -34,7 +34,7 @@ func main() {
 }
 ```
 ## API
-```
+```go
 import "github.com/arvinkulagin/pinger"
 
 type Pinger interface {
