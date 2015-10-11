@@ -14,7 +14,7 @@ func main() {
 		os.Exit(1)
 	}
 	raddr := os.Args[1]
-	p, err := pinger.NewPinger("icmp", "0.0.0.0")
+	p, err := pinger.NewPinger("udp", "0.0.0.0")
 	if err != nil {
 		log.Fatal(err)
 	}
