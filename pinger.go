@@ -39,7 +39,7 @@ type ICMP4Pinger struct {
 func NewICMP4Pinger(laddr string) (*ICMP4Pinger, error) {
 	addr, err := net.ResolveIPAddr("ip4", laddr)
 	if err != nil {
-		return &ICMP4Pinger{}, err
+		return nil, err
 	}
 	pinger := ICMP4Pinger{
 		laddr: addr,
@@ -96,7 +96,7 @@ type UDP4Pinger struct {
 func NewUDP4Pinger(laddr string) (*UDP4Pinger, error) {
 	addr, err := net.ResolveIPAddr("ip4", laddr)
 	if err != nil {
-		return &UDP4Pinger{}, err
+		return nil, err
 	}
 	pinger := UDP4Pinger{
 		laddr: addr,
@@ -153,9 +153,10 @@ func ping(listener *icmp.PacketConn, message icmp.Message, raddr net.Addr, timeo
 	}
 	now := time.Now()
 	done := make(chan Pong)
-	go func(listener *icmp.PacketConn) {
+	go func() {
 		for {
 			buf := make([]byte, 10000)
+			// bufio
 			n, peer, err := listener.ReadFrom(buf)
 			if err != nil {
 				return
@@ -180,7 +181,7 @@ func ping(listener *icmp.PacketConn, message icmp.Message, raddr net.Addr, timeo
 			done <- pong
 			return
 		}
-	}(listener)
+	}()
 	select {
 	case pong := <-done:
 		return pong, nil
